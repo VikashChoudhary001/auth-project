@@ -17,19 +17,29 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const data = await loginUser(formData);
+  try {
+    const res = await loginUser(formData);
 
-    console.log("data : ",data)
+    console.log("login response:", res);
 
-    if (data.token) {
-      localStorage.setItem("token", data.token);
+    if (res?.status === "success") {
+      const { token } = res.data;
+
+      localStorage.setItem("token", token);
+      alert(res.message || "Login successful");
       navigate("/dashboard");
     } else {
-      alert(data.message || "Login failed");
+      alert(res?.message || "Login failed");
     }
-  };
+
+  } catch (error) {
+    console.error("LOGIN ERROR:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
 
   return (
     <div className="container mt-5">

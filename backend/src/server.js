@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config(); // 🔥 MUST be at the top
+
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";

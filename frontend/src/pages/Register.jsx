@@ -18,17 +18,24 @@ function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
+  try {
     const data = await registerUser(formData);
 
-    if (data.message) {
-      alert("Registration successful");
-      navigate("/");
+    if (data?.status === "success") {
+      alert(data.message || "Registration successful");
+      navigate("/"); // login page
     } else {
-      alert("Registration failed");
+      alert(data?.message || "Registration failed");
     }
-  };
+
+  } catch (error) {
+    console.error("REGISTER ERROR:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
 
   return (
     <div className="container mt-5">
